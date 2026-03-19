@@ -1,2 +1,35 @@
-.idea/vcs.xml
-.idea/copilotDiffState.xml
+# IntelliJ IDEA
+.idea/*
+.idea/misc.xml
+.idea/modules.xml
+*.iml
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Java
+*.class
+*.log
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+
+# Spring Boot
+spring-boot-*.log
+
+# OS
+.DS_Store
+Thumbs.db
