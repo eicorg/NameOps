@@ -11,14 +11,16 @@
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
-    <description>EIC device naming service - Generate and validate standardized nomenclature for Electron-Ion Collider components</description>
+    <description>EIC device naming service - Generate and validate standardized nomenclature for Electron-Ion Collider
+        components
+    </description>
 
     <properties>
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.boot.version>3.2.3</spring.boot.version>
+        <spring.boot.version>4.0.2</spring.boot.version>
         <jackson.version>2.16.1</jackson.version>
         <log4j-to-slf4j.version>2.23.0</log4j-to-slf4j.version>
         <junit.version>5.10.2</junit.version>
@@ -114,6 +116,13 @@
         </dependency>
 
         <!-- Testing -->
+        <!-- Source: https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-webtestclient -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-webtestclient</artifactId>
+            <version>4.0.2</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
@@ -123,12 +132,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.jupiter</groupId>
-                    <artifactId>junit-jupiter</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

@@ -24,11 +24,19 @@ public class NamingRepositoryUtil {
     private NamingRepositoryUtil() {
         Map<String, Object> config = loadConfiguration();
 
+        System.out.println("Config keys: " + config.keySet());
+
         this.areas = loadElements(config, "areas");
         this.devices = loadElements(config, "devices");
         this.controllers = loadElements(config, "controllers");
         this.signals = loadElements(config, "signals");
         this.specificAreas = loadElements(config, "specificAreas");
+
+        System.out.println("Loaded " + this.areas.size() + " areas");
+        System.out.println("Loaded " + this.devices.size() + " devices");
+        System.out.println("Loaded " + this.controllers.size() + " controllers");
+        System.out.println("Loaded " + this.signals.size() + " signals");
+        System.out.println("Loaded " + this.specificAreas.size() + " specificAreas");
     }
 
     /**
@@ -56,11 +64,17 @@ public class NamingRepositoryUtil {
                 .getResourceAsStream("naming-repository.yaml");
 
             if (inputStream == null) {
+                System.err.println("ERROR: naming-repository.yaml not found in resources");
+                System.err.println("Classpath: " + System.getProperty("java.class.path"));
                 throw new RuntimeException("naming-repository.yaml not found in resources");
             }
 
-            return yaml.load(inputStream);
+            Map<String, Object> config = yaml.load(inputStream);
+            System.out.println("Successfully loaded naming repository configuration");
+            return config;
         } catch (Exception e) {
+            System.err.println("ERROR: Failed to load naming repository configuration: " + e.getMessage());
+            e.printStackTrace();
             throw new RuntimeException("Failed to load naming repository configuration", e);
         }
     }
@@ -71,9 +85,12 @@ public class NamingRepositoryUtil {
     @SuppressWarnings("unchecked")
     private Map<String, NamingElement> loadElements(Map<String, Object> config, String key) {
         List<Map<String, String>> elements = (List<Map<String, String>>) config.get(key);
+        System.out.println("Loading elements for key: " + key);
         if (elements == null) {
+            System.out.println("No elements found for key: " + key);
             return new HashMap<>();
         }
+        System.out.println("Found " + elements.size() + " elements for key: " + key);
 
         return elements.stream()
             .map(this::mapToNamingElement)

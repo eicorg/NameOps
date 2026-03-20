@@ -68,12 +68,12 @@ public class NameController {
         String deviceName = request.get("name");
 
         // TODO: Implement validation logic
-        return Map.of(
-            "status", "success",
-            "name", deviceName,
-            "valid", true,
-            "message", "Validation endpoint - To be implemented"
-        );
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+        response.put("name", deviceName);
+        response.put("valid", true);
+        response.put("message", "Validation endpoint - To be implemented");
+        return response;
     }
 
     /**
