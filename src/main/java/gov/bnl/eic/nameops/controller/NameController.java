@@ -1,7 +1,12 @@
 package gov.bnl.eic.nameops.controller;
 
+import gov.bnl.eic.nameops.util.NameGeneratorUtil;
+import gov.bnl.eic.nameops.util.NamingRepositoryUtil;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -28,13 +33,31 @@ public class NameController {
      * Generate a device name based on provided parameters
      */
     @PostMapping("/generate")
-    public Map<String, Object> generateName(@RequestBody Map<String, String> parameters) {
-        // TODO: Implement name generation logic
-        return Map.of(
-            "status", "success",
-            "message", "Name generation endpoint - To be implemented",
-            "parameters", parameters
-        );
+    public ResponseEntity<Map<String, Object>> generateName(@RequestBody Map<String, String> parameters) {
+        try {
+            String generatedName = NameGeneratorUtil.generateDeviceName(parameters);
+            Map<String, Object> response = new HashMap<>();
+            response.put("status", "success");
+            response.put("generatedName", generatedName);
+            response.put("parameters", parameters);
+            response.put("message", "Device name generated successfully");
+
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("status", "error");
+            errorResponse.put("message", e.getMessage());
+            errorResponse.put("parameters", parameters);
+
+            return ResponseEntity.badRequest().body(errorResponse);
+        } catch (Exception e) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("status", "error");
+            errorResponse.put("message", "An unexpected error occurred: " + e.getMessage());
+            errorResponse.put("parameters", parameters);
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
     }
 
     /**
@@ -71,5 +94,50 @@ public class NameController {
             ),
             "description", "EIC device naming convention for non-lattice devices"
         );
+    }
+
+    /**
+     * Get all valid naming repository elements (areas, devices, signals, etc.)
+     */
+    @GetMapping("/repository")
+    public Map<String, Object> getRepository() {
+        NamingRepositoryUtil repository = NamingRepositoryUtil.getInstance();
+        return repository.getAllElementsSummary();
+    }
+
+    /**
+     * Get valid areas from the naming repository
+     */
+    @GetMapping("/repository/areas")
+    public Map<String, Object> getAreas() {
+        NamingRepositoryUtil repository = NamingRepositoryUtil.getInstance();
+        return Map.of("areas", repository.getAllAreas());
+    }
+
+    /**
+     * Get valid devices from the naming repository
+     */
+    @GetMapping("/repository/devices")
+    public Map<String, Object> getDevices() {
+        NamingRepositoryUtil repository = NamingRepositoryUtil.getInstance();
+        return Map.of("devices", repository.getAllDevices());
+    }
+
+    /**
+     * Get valid signals from the naming repository
+     */
+    @GetMapping("/repository/signals")
+    public Map<String, Object> getSignals() {
+        NamingRepositoryUtil repository = NamingRepositoryUtil.getInstance();
+        return Map.of("signals", repository.getAllSignals());
+    }
+
+    /**
+     * Get valid controllers from the naming repository
+     */
+    @GetMapping("/repository/controllers")
+    public Map<String, Object> getControllers() {
+        NamingRepositoryUtil repository = NamingRepositoryUtil.getInstance();
+        return Map.of("controllers", repository.getAllControllers());
     }
 }
