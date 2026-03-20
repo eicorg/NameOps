@@ -39,6 +39,25 @@ For detailed syntax requirements and element descriptions, see the [Naming Conve
 - **Name Generation** - Create standardized device names following EIC conventions
 - **Name Validation** - Verify device names comply with naming standards
 - **Repository Access** - Utilize approved abbreviations and naming databases
+- **Configuration-Driven** - Valid naming elements defined in YAML configuration
+
+## Naming Repository
+
+The system maintains a repository of valid naming elements in `src/main/resources/naming-repository.yaml`. This configuration file contains:
+
+- **Areas (aa)**: Valid installation locations (ES, IS, TB, IR, HALL)
+- **Devices (dd)**: Device function types with full names and lattice keywords
+- **Controllers (cc)**: Controller device types for lattice devices
+- **Signals (ss)**: Signal classification types (RB, SP, RD, WR, etc.)
+- **Specific Areas (bb)**: Sub-locations within main areas
+
+Each element includes:
+- Abbreviation (used in device names)
+- Full name (descriptive name)
+- Description (purpose and usage)
+- Lattice keyword (for beamline devices, when applicable)
+
+The repository is validated at runtime when generating device names to ensure all components are valid and approved.
 
 ## Getting Started
 
@@ -66,6 +85,11 @@ The service will start on `http://localhost:8080`
 - **Generate Name**: `POST /api/v1/nameops/generate`
 - **Validate Name**: `POST /api/v1/nameops/validate`
 - **Get Convention**: `GET /api/v1/nameops/convention`
+- **Get Repository**: `GET /api/v1/nameops/repository`
+- **Get Areas**: `GET /api/v1/nameops/repository/areas`
+- **Get Devices**: `GET /api/v1/nameops/repository/devices`
+- **Get Signals**: `GET /api/v1/nameops/repository/signals`
+- **Get Controllers**: `GET /api/v1/nameops/repository/controllers`
 
 ### API Documentation
 
