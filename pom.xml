@@ -18,7 +18,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.boot.version>4.0.1</spring.boot.version>
+        <spring.boot.version>3.2.3</spring.boot.version>
         <jackson.version>2.16.1</jackson.version>
         <log4j-to-slf4j.version>2.23.0</log4j-to-slf4j.version>
         <junit.version>5.10.2</junit.version>

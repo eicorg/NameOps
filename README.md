@@ -40,6 +40,39 @@ For detailed syntax requirements and element descriptions, see the [Naming Conve
 - **Name Validation** - Verify device names comply with naming standards
 - **Repository Access** - Utilize approved abbreviations and naming databases
 
+## Getting Started
+
+### Prerequisites
+- Java 17 or higher
+- Maven 3.6 or higher
+
+### Running the Application
+
+1. Build the project:
+```bash
+mvn clean install
+```
+
+2. Run the application:
+```bash
+mvn spring-boot:run
+```
+
+The service will start on `http://localhost:8080`
+
+### API Endpoints
+
+- **Health Check**: `GET /api/v1/nameops/health`
+- **Generate Name**: `POST /api/v1/nameops/generate`
+- **Validate Name**: `POST /api/v1/nameops/validate`
+- **Get Convention**: `GET /api/v1/nameops/convention`
+
+### API Documentation
+
+Once the application is running, access the interactive API documentation at:
+- Swagger UI: `http://localhost:8080/swagger-ui.html`
+- OpenAPI JSON: `http://localhost:8080/api-docs`
+
 ## Resources
 
 All reference documents and databases are located in the `resources/` directory.
@@ -48,6 +81,24 @@ All reference documents and databases are located in the `resources/` directory.
 
 - [Naming Convention Specification](naming-convention.md) - Complete syntax requirements and guidelines
 
+## Technology Stack
+
+- **Java 17**
+- **Spring Boot 3.2.3** (with BOM dependency management)
+- **Spring Web** - REST API framework
+- **Spring Boot Actuator** - Production-ready monitoring
+- **Jackson 2.16.1** - JSON processing
+- **JUnit 5** - Testing framework
+- **SLF4J** - Logging abstraction
+
+## Build Configuration
+
+The project uses Maven with:
+- Spring Boot BOM for dependency management
+- Explicit Jackson version (2.16.1)
+- Log4j to SLF4J adapter
+- Executable JAR profile for deployment
+
 ## Date
 
-Last updated: March 19, 2026
+Last updated: March 20, 2026
