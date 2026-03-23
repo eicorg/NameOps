@@ -40,11 +40,77 @@ For detailed syntax requirements and element descriptions, see the [Naming Conve
 - **Name Generation** - Create standardized device names following EIC conventions
 - **Name Validation** - Verify device names comply with naming standards
 - **Repository Access** - Utilize approved abbreviations and naming databases
-- **Configuration-Driven** - Valid naming elements defined in YAML configuration
+- **Configuration-Driven** - Valid naming elements defined in JSON configuration
+- **REST API** - RESTful web service with OpenAPI/Swagger documentation
+
+## Getting Started
+
+### Running the Application
+
+```bash
+# Build the project
+mvn clean package
+
+# Run the application
+java -jar target/nameops-1.0.0-SNAPSHOT.jar
+```
+
+The service will start on `http://localhost:8080`
+
+### API Documentation
+
+Once the application is running, you can access the interactive API documentation:
+
+- **Swagger UI**: http://localhost:8080/swagger-ui.html
+- **OpenAPI JSON**: http://localhost:8080/api-docs
+
+The Swagger UI provides an interactive interface to:
+- Explore all available endpoints
+- View request/response schemas
+- Test API calls directly from the browser
+- See example requests and responses
+
+### REST API Endpoints
+
+All endpoints are prefixed with `/api/v1/nameops`:
+
+- `GET /health` - Service health check
+- `POST /generate` - Generate a device name
+- `POST /validate` - Validate a device name
+- `GET /convention` - Get naming convention details
+- `GET /repository` - Get all naming repository elements
+- `GET /repository/areas` - Get valid areas
+- `GET /repository/devices` - Get valid devices
+- `GET /repository/signals` - Get valid signals
+- `GET /repository/controllers` - Get valid controllers
+
+### Example API Calls
+
+**Generate a device name:**
+```bash
+curl -X POST http://localhost:8080/api/v1/nameops/generate \
+  -H "Content-Type: application/json" \
+  -d '{"area":"TB","specificArea":"01","device":"PS","position":"10"}'
+```
+
+**Response:**
+```json
+{
+  "status": "success",
+  "generatedName": "TB:01-PS10",
+  "parameters": {
+    "area": "TB",
+    "specificArea": "01",
+    "device": "PS",
+    "position": "10"
+  },
+  "message": "Device name generated successfully"
+}
+```
 
 ## Naming Repository
 
-The system maintains a repository of valid naming elements in `src/main/resources/naming-repository.yaml`. This configuration file contains:
+The system maintains a repository of valid naming elements in `src/main/resources/naming-repository.json`. This configuration file contains:
 
 - **Areas (aa)**: Valid installation locations (ES, IS, TB, IR, HALL)
 - **Devices (dd)**: Device function types with full names and lattice keywords
