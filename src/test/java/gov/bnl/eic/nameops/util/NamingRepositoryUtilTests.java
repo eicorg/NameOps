@@ -1,6 +1,8 @@
 package gov.bnl.eic.nameops.util;
 
 import gov.bnl.eic.nameops.model.NamingElement;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
@@ -11,6 +13,18 @@ import static org.junit.jupiter.api.Assertions.*;
  * Unit tests for NamingRepositoryUtil
  */
 class NamingRepositoryUtilTests {
+
+    @BeforeAll
+    static void setup() {
+        // Load test configuration
+        NamingRepositoryUtil.setConfigFileName("test-naming-repository.yaml");
+    }
+
+    @AfterAll
+    static void tearDown() {
+        // Reset to default configuration
+        NamingRepositoryUtil.setConfigFileName("naming-repository.yaml");
+    }
 
     @Test
     void testGetInstance() {

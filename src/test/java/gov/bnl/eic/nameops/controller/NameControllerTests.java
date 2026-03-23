@@ -1,6 +1,9 @@
 package gov.bnl.eic.nameops.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import gov.bnl.eic.nameops.util.NamingRepositoryUtil;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,18 @@ class NameControllerTests {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @BeforeAll
+    static void setupAll() {
+        // Load test configuration
+        NamingRepositoryUtil.setConfigFileName("test-naming-repository.yaml");
+    }
+
+    @AfterAll
+    static void tearDownAll() {
+        // Reset to default configuration
+        NamingRepositoryUtil.setConfigFileName("naming-repository.yaml");
+    }
 
     @BeforeEach
     void setup() {

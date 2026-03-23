@@ -14,6 +14,16 @@ import java.util.stream.Collectors;
 public class NamingRepositoryUtil {
 
     private static NamingRepositoryUtil instance;
+    private static String configFileName;
+
+    static {
+        // Try to load from system property first, then environment variable, then default
+        configFileName = System.getProperty("naming.repository.file",
+                System.getenv("NAMING_REPOSITORY_FILE"));
+        if (configFileName == null || configFileName.isEmpty()) {
+            configFileName = "naming-repository.yaml";
+        }
+    }
 
     private final Map<String, NamingElement> areas;
     private final Map<String, NamingElement> devices;
@@ -54,6 +64,23 @@ public class NamingRepositoryUtil {
     }
 
     /**
+     * Set configuration file name (for testing purposes)
+     */
+    public static void setConfigFileName(String fileName) {
+        configFileName = fileName;
+        resetInstance();
+    }
+
+    /**
+     * Reset instance (for testing purposes)
+     */
+    public static void resetInstance() {
+        synchronized (NamingRepositoryUtil.class) {
+            instance = null;
+        }
+    }
+
+    /**
      * Load configuration from YAML file
      */
     @SuppressWarnings("unchecked")
@@ -61,16 +88,16 @@ public class NamingRepositoryUtil {
         try {
             Yaml yaml = new Yaml();
             InputStream inputStream = getClass().getClassLoader()
-                .getResourceAsStream("naming-repository.yaml");
+                .getResourceAsStream(configFileName);
 
             if (inputStream == null) {
-                System.err.println("ERROR: naming-repository.yaml not found in resources");
+                System.err.println("ERROR: " + configFileName + " not found in resources");
                 System.err.println("Classpath: " + System.getProperty("java.class.path"));
-                throw new RuntimeException("naming-repository.yaml not found in resources");
+                throw new RuntimeException(configFileName + " not found in resources");
             }
 
             Map<String, Object> config = yaml.load(inputStream);
-            System.out.println("Successfully loaded naming repository configuration");
+            System.out.println("Successfully loaded naming repository configuration from " + configFileName);
             return config;
         } catch (Exception e) {
             System.err.println("ERROR: Failed to load naming repository configuration: " + e.getMessage());

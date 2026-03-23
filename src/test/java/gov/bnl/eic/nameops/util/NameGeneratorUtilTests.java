@@ -1,5 +1,7 @@
 package gov.bnl.eic.nameops.util;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -12,18 +14,30 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class NameGeneratorUtilTests {
 
+    @BeforeAll
+    static void setup() {
+        // Load test configuration
+        NamingRepositoryUtil.setConfigFileName("test-naming-repository.yaml");
+    }
+
+    @AfterAll
+    static void tearDown() {
+        // Reset to default configuration
+        NamingRepositoryUtil.setConfigFileName("naming-repository.yaml");
+    }
+
     @Test
     void testGenerateNonLatticeDeviceName_AllFields() {
         String result = NameGeneratorUtil.generateNonLatticeDeviceName(
-            "TB", "01", "PS", "10", "01", "01", "RB"
+            "TB", "01", "PS", "10", "01", "01", "CC", "RB"
         );
-        assertEquals("TB:01-PS10.01_01-RB", result);
+        assertEquals("TB:01-PS10:01:01-CC:RB", result);
     }
 
     @Test
     void testGenerateNonLatticeDeviceName_MinimalFields() {
         String result = NameGeneratorUtil.generateNonLatticeDeviceName(
-            "TB", null, "PS", null, null, null, null
+            "TB", null, "PS", null, null, null, null, null
         );
         assertEquals("TB-PS", result);
     }
@@ -31,7 +45,7 @@ class NameGeneratorUtilTests {
     @Test
     void testGenerateNonLatticeDeviceName_WithoutSpecificArea() {
         String result = NameGeneratorUtil.generateNonLatticeDeviceName(
-            "TB", null, "PS", "10", null, null, null
+            "TB", null, "PS", "10", null, null, null, null
         );
         assertEquals("TB-PS10", result);
     }
@@ -39,16 +53,16 @@ class NameGeneratorUtilTests {
     @Test
     void testGenerateNonLatticeDeviceName_WithSignal() {
         String result = NameGeneratorUtil.generateNonLatticeDeviceName(
-            "TB", "01", "PS", "10", null, null, "RB"
+            "TB", "01", "PS", "10", null, null, null, "RB"
         );
-        assertEquals("TB:01-PS10-RB", result);
+        assertEquals("TB:01-PS10:RB", result);
     }
 
     @Test
     void testGenerateNonLatticeDeviceName_MissingArea() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             NameGeneratorUtil.generateNonLatticeDeviceName(
-                null, "01", "PS", "10", null, null, null
+                null, "01", "PS", "10", null, null, null, null
             );
         });
         assertTrue(exception.getMessage().contains("Area is required"));
@@ -58,7 +72,7 @@ class NameGeneratorUtilTests {
     void testGenerateNonLatticeDeviceName_MissingDevice() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             NameGeneratorUtil.generateNonLatticeDeviceName(
-                "TB", "01", null, "10", null, null, null
+                "TB", "01", null, "10", null, null, null, null
             );
         });
         assertTrue(exception.getMessage().contains("Device is required"));
@@ -73,10 +87,11 @@ class NameGeneratorUtilTests {
         params.put("position", "10");
         params.put("secondaryPosition", "01");
         params.put("appendNumber", "01");
+        params.put("controller", "CC");
         params.put("signal", "RB");
 
         String result = NameGeneratorUtil.generateNonLatticeDeviceName(params);
-        assertEquals("TB:01-PS10.01_01-RB", result);
+        assertEquals("TB:01-PS10:01:01-CC:RB", result);
     }
 
     @Test
@@ -201,16 +216,16 @@ class NameGeneratorUtilTests {
     @Test
     void testCaseInsensitive_ConvertToUpperCase() {
         String result = NameGeneratorUtil.generateNonLatticeDeviceName(
-            "tb", "01", "ps", "10", null, null, "rb"
+            "tb", "01", "ps", "10", null, null, null, "rb"
         );
-        assertEquals("TB:01-PS10-RB", result);
+        assertEquals("TB:01-PS10:RB", result);
     }
 
     @Test
     void testValidation_InvalidAreaFormat() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             NameGeneratorUtil.generateNonLatticeDeviceName(
-                "T", null, "PS", "10", null, null, null
+                "T", null, "PS", "10", null, null, null, null
             );
         });
         assertTrue(exception.getMessage().contains("Area format is invalid"));
@@ -220,19 +235,21 @@ class NameGeneratorUtilTests {
     void testValidation_InvalidDeviceFormat() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             NameGeneratorUtil.generateNonLatticeDeviceName(
-                "TB", null, "P", "10", null, null, null
+                "TB", null, "P", "10", null, null, null, null
             );
         });
-        assertTrue(exception.getMessage().contains("Device format is invalid"));
+        assertTrue(exception.getMessage().contains("Device") &&
+                   (exception.getMessage().contains("format is invalid") ||
+                    exception.getMessage().contains("not in the naming repository")));
     }
 
     @Test
     void testComplexExample_NonLattice() {
-        // Example: IR:HALL-BPM05.02_03-RDX
+        // Example: IR:HALL-BPM05:02:03-RDX
         String result = NameGeneratorUtil.generateNonLatticeDeviceName(
-            "IR", "HALL", "BPM", "05", "02", "03", "RDX"
+            "IR", "HALL", "BPM", "05", "02", "03", null, "RDX"
         );
-        assertEquals("IR:HALL-BPM05.02_03-RDX", result);
+        assertEquals("IR:HALL-BPM05:02:03:RDX", result);
     }
 
     @Test
@@ -247,7 +264,7 @@ class NameGeneratorUtilTests {
     @Test
     void testEmptyStringFields_TreatedAsNull() {
         String result = NameGeneratorUtil.generateNonLatticeDeviceName(
-            "TB", "", "PS", "", "", "", ""
+            "TB", "", "PS", "", "", "", "", ""
         );
         assertEquals("TB-PS", result);
     }

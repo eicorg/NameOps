@@ -1,17 +1,23 @@
-# EIC Device Naming Convention Repository
-# This file contains all valid abbreviations and their full names for device naming
+# EIC Device Naming Convention Repository - TEST DATA
+# This file contains test data for unit tests
 
 # Areas (aa) - Installation locations
 areas:
   - abbreviation: "ES"
     fullName: "Electron Storage Ring"
     description: "Main electron storage ring"
+  - abbreviation: "ES6"
+    fullName: "Electron Storage Ring Section 6"
+    description: "Electron storage ring section 6"
   - abbreviation: "IS"
     fullName: "Ion Storage Ring"
     description: "Main ion storage ring"
   - abbreviation: "IR"
     fullName: "Interaction Region"
     description: "Interaction region area"
+  - abbreviation: "TB"
+    fullName: "Test Beam"
+    description: "Test beam area"
   - abbreviation: "HALL"
     fullName: "Experimental Hall"
     description: "Main experimental hall"
@@ -74,7 +80,7 @@ devices:
     fullName: "Pressure Monitor"
     description: "Pressure monitoring device"
 
-# Controllers (cc) - Controller device types (for lattice devices)
+# Controllers (cc) - Controller device types
 controllers:
   - abbreviation: "PS"
     fullName: "Power Supply"
@@ -112,7 +118,6 @@ signals:
   - abbreviation: "RDY"
     fullName: "Read Y-axis"
     description: "Read Y-axis signal"
-    description: "Read signal"
   - abbreviation: "WR"
     fullName: "Write"
     description: "Write signal"
@@ -125,12 +130,6 @@ signals:
   - abbreviation: "ALM"
     fullName: "Alarm"
     description: "Alarm signal"
-  - abbreviation: "RDX"
-    fullName: "Readback X"
-    description: "X-axis readback"
-  - abbreviation: "RDY"
-    fullName: "Readback Y"
-    description: "Y-axis readback"
 
 # Specific Areas (bb) - Sub-locations within areas
 specificAreas:

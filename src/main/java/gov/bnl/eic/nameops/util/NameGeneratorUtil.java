@@ -23,13 +23,13 @@ public class NameGeneratorUtil {
     private static final NamingRepositoryUtil repository = NamingRepositoryUtil.getInstance();
 
     // Validation patterns
-    private static final Pattern AREA_PATTERN = Pattern.compile("^[A-Z]{2,4}$");
+    private static final Pattern AREA_PATTERN = Pattern.compile("^[A-Z0-9]{2,4}$");
     private static final Pattern SPECIFIC_AREA_PATTERN = Pattern.compile("^[A-Z0-9]{1,4}$");
     private static final Pattern DEVICE_PATTERN = Pattern.compile("^[A-Z]{1,4}$");
     private static final Pattern POSITION_PATTERN = Pattern.compile("^\\d{1,3}$");
     private static final Pattern SECONDARY_POSITION_PATTERN = Pattern.compile("^\\d{1,2}$");
     private static final Pattern APPEND_NUMBER_PATTERN = Pattern.compile("^\\d{1,2}$");
-    private static final Pattern SIGNAL_PATTERN = Pattern.compile("^[A-Z]{2,4}$");
+    private static final Pattern SIGNAL_PATTERN = Pattern.compile("^[A-Z0-9]{2,4}$");
 
     private NameGeneratorUtil() {
         // Private constructor to prevent instantiation
@@ -64,6 +64,19 @@ public class NameGeneratorUtil {
         // Validate required fields
         validateRequired(area, "Area");
         validateRequired(device, "Device");
+
+        // Convert to uppercase for validation and use
+        area = area.toUpperCase();
+        if (specificArea != null && !specificArea.isEmpty()) {
+            specificArea = specificArea.toUpperCase();
+        }
+        device = device.toUpperCase();
+        if (controller != null && !controller.isEmpty()) {
+            controller = controller.toUpperCase();
+        }
+        if (signal != null && !signal.isEmpty()) {
+            signal = signal.toUpperCase();
+        }
 
         // Validate field formats
         validateField(area, AREA_PATTERN, "Area");
@@ -106,13 +119,13 @@ public class NameGeneratorUtil {
         StringBuilder name = new StringBuilder();
 
         // aa:bb-ddpp:zz:nn-cc:ss
-        name.append(area.toUpperCase());
+        name.append(area);
 
         if (specificArea != null && !specificArea.isEmpty()) {
-            name.append(":").append(specificArea.toUpperCase());
+            name.append(":").append(specificArea);
         }
 
-        name.append("-").append(device.toUpperCase());
+        name.append("-").append(device);
 
         if (position != null && !position.isEmpty()) {
             name.append(position);
@@ -127,11 +140,11 @@ public class NameGeneratorUtil {
         }
 
         if (controller != null && !controller.isEmpty()) {
-            name.append("-").append(controller.toUpperCase());
+            name.append("-").append(controller);
         }
 
         if (signal != null && !signal.isEmpty()) {
-            name.append(":").append(signal.toUpperCase());
+            name.append(":").append(signal);
         }
 
         return name.toString();
@@ -183,6 +196,16 @@ public class NameGeneratorUtil {
         validateRequired(area, "Area");
         validateRequired(device, "Device");
         validateRequired(position, "Position");
+
+        // Convert to uppercase for validation and use
+        area = area.toUpperCase();
+        device = device.toUpperCase();
+        if (controller != null && !controller.isEmpty()) {
+            controller = controller.toUpperCase();
+        }
+        if (signal != null && !signal.isEmpty()) {
+            signal = signal.toUpperCase();
+        }
 
         // Validate field formats
         validateField(area, AREA_PATTERN, "Area");
