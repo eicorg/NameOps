@@ -17,13 +17,13 @@ class NameGeneratorUtilTests {
     @BeforeAll
     static void setup() {
         // Load test configuration
-        NamingRepositoryUtil.setConfigFileName("test-naming-repository.yaml");
+        NamingRepositoryUtil.setConfigFileName("test-naming-repository.json");
     }
 
     @AfterAll
     static void tearDown() {
         // Reset to default configuration
-        NamingRepositoryUtil.setConfigFileName("naming-repository.yaml");
+        NamingRepositoryUtil.setConfigFileName("naming-repository.json");
     }
 
     @Test

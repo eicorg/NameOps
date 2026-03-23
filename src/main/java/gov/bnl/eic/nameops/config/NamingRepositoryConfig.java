@@ -13,7 +13,7 @@ import jakarta.annotation.PostConstruct;
 @Configuration
 public class NamingRepositoryConfig {
 
-    @Value("${naming.repository.file:naming-repository.yaml}")
+    @Value("${naming.repository.file:naming-repository.json}")
     private String repositoryFile;
 
     /**

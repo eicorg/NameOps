@@ -1,7 +1,7 @@
 package gov.bnl.eic.nameops.util;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import gov.bnl.eic.nameops.model.NamingElement;
-import org.yaml.snakeyaml.Yaml;
 
 import java.io.InputStream;
 import java.util.*;
@@ -15,13 +15,14 @@ public class NamingRepositoryUtil {
 
     private static NamingRepositoryUtil instance;
     private static String configFileName;
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     static {
         // Try to load from system property first, then environment variable, then default
         configFileName = System.getProperty("naming.repository.file",
                 System.getenv("NAMING_REPOSITORY_FILE"));
         if (configFileName == null || configFileName.isEmpty()) {
-            configFileName = "naming-repository.yaml";
+            configFileName = "naming-repository.json";
         }
     }
 
@@ -81,12 +82,11 @@ public class NamingRepositoryUtil {
     }
 
     /**
-     * Load configuration from YAML file
+     * Load configuration from JSON file
      */
     @SuppressWarnings("unchecked")
     private Map<String, Object> loadConfiguration() {
         try {
-            Yaml yaml = new Yaml();
             InputStream inputStream = getClass().getClassLoader()
                 .getResourceAsStream(configFileName);
 
@@ -96,7 +96,7 @@ public class NamingRepositoryUtil {
                 throw new RuntimeException(configFileName + " not found in resources");
             }
 
-            Map<String, Object> config = yaml.load(inputStream);
+            Map<String, Object> config = objectMapper.readValue(inputStream, Map.class);
             System.out.println("Successfully loaded naming repository configuration from " + configFileName);
             return config;
         } catch (Exception e) {

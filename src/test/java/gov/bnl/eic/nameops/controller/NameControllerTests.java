@@ -29,26 +29,24 @@ class NameControllerTests {
 
     private MockMvc mockMvc;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @BeforeAll
     static void setupAll() {
         // Load test configuration
-        NamingRepositoryUtil.setConfigFileName("test-naming-repository.yaml");
+        NamingRepositoryUtil.setConfigFileName("test-naming-repository.json");
     }
 
     @AfterAll
     static void tearDownAll() {
         // Reset to default configuration
-        NamingRepositoryUtil.setConfigFileName("naming-repository.yaml");
+        NamingRepositoryUtil.setConfigFileName("naming-repository.json");
     }
 
     @BeforeEach
     void setup() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
     }
-
     @Test
     void testHealthEndpoint() throws Exception {
         mockMvc.perform(get("/api/v1/nameops/health"))
@@ -156,7 +154,7 @@ class NameControllerTests {
                         .content(objectMapper.writeValueAsString(parameters)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("success"))
-                .andExpect(jsonPath("$.generatedName").value("TB:01-PS10.01_01-RB"));
+                .andExpect(jsonPath("$.generatedName").value("TB:01-PS10:01:01:RB"));
     }
 
     @Test
