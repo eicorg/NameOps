@@ -20,7 +20,7 @@ This repository provides services to create, generate, and validate standardized
 The nomenclature syntax for EIC devices is:
 
 ```
-aa:bb-ddpp.zz_nn-ss
+aa:bb-ddpp:zz:nn-cc:ss
 ```
 
 ### Key Elements
@@ -30,6 +30,7 @@ aa:bb-ddpp.zz_nn-ss
 - **pp** - Position number
 - **zz** - Secondary position (for devices with horizontal/vertical positioning)
 - **nn** - Append number (connection points)
+- **cc** - Controller device
 - **ss** - Signal classification
 
 For detailed syntax requirements and element descriptions, see the [Naming Convention](naming-convention.md) document.

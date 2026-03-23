@@ -82,7 +82,7 @@ public class NameController {
     @GetMapping("/convention")
     public Map<String, Object> getConvention() {
         return Map.of(
-            "syntax", "aa:bb-ddpp.zz_nn-ss",
+            "syntax", "aa:bb-ddpp:zz:nn-cc:ss",
             "elements", Map.of(
                 "aa", "Area (installation location)",
                 "bb", "Specific area within location",
@@ -90,6 +90,7 @@ public class NameController {
                 "pp", "Position number",
                 "zz", "Secondary position (horizontal/vertical)",
                 "nn", "Append number (connection points)",
+                "cc", "Controller device",
                 "ss", "Signal classification"
             ),
             "description", "EIC device naming convention for non-lattice devices"

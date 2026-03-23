@@ -5,7 +5,7 @@
 The generalized nomenclature syntax is:
 
 ```
-aa:bb-ddpp.zz_nn-ccss
+aa:bb-ddpp:zz:nn-cc:ss
 ```
 
 ### Naming Elements
@@ -64,7 +64,7 @@ The signal is used when it is necessary to specify a signal type.
 Naming for non-lattice devices is based on physical location:
 
 ```
-aa:bb-ddpp.zz_nn-ss
+aa:bb-ddpp:zz:nn-cc:ss
 ```
 
 ### 3.2.1 Area (aa) and Specific Area (bb)

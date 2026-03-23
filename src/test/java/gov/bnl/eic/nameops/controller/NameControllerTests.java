@@ -49,13 +49,14 @@ class NameControllerTests {
         mockMvc.perform(get("/api/v1/nameops/convention"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.syntax").value("aa:bb-ddpp.zz_nn-ss"))
+                .andExpect(jsonPath("$.syntax").value("aa:bb-ddpp:zz:nn-cc:ss"))
                 .andExpect(jsonPath("$.elements.aa").value("Area (installation location)"))
                 .andExpect(jsonPath("$.elements.bb").value("Specific area within location"))
                 .andExpect(jsonPath("$.elements.dd").value("Device function"))
                 .andExpect(jsonPath("$.elements.pp").value("Position number"))
                 .andExpect(jsonPath("$.elements.zz").value("Secondary position (horizontal/vertical)"))
                 .andExpect(jsonPath("$.elements.nn").value("Append number (connection points)"))
+                .andExpect(jsonPath("$.elements.cc").value("Controller device"))
                 .andExpect(jsonPath("$.elements.ss").value("Signal classification"))
                 .andExpect(jsonPath("$.description").value("EIC device naming convention for non-lattice devices"));
     }
@@ -81,7 +82,7 @@ class NameControllerTests {
 
     @Test
     void testValidateNameEndpoint() throws Exception {
-        Map<String, String> request = Map.of("name", "TB:01-PS10.01_01-RB");
+        Map<String, String> request = Map.of("name", "TB:01-PS10:01:01-CC:RB");
 
         mockMvc.perform(post("/api/v1/nameops/validate")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -89,7 +90,7 @@ class NameControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.status").value("success"))
-                .andExpect(jsonPath("$.name").value("TB:01-PS10.01_01-RB"))
+                .andExpect(jsonPath("$.name").value("TB:01-PS10:01:01-CC:RB"))
                 .andExpect(jsonPath("$.valid").value(true));
     }
 

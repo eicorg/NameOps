@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 /**
  * Utility class for generating EIC device names according to the naming convention.
  *
- * Naming Convention Syntax: aa:bb-ddpp.zz_nn-ss
+ * Naming Convention Syntax: aa:bb-ddpp:zz:nn-cc:ss
  *
  * Elements:
  * - aa: Area (installation location)
@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
  * - pp: Position number
  * - zz: Secondary position (horizontal/vertical)
  * - nn: Append number (connection points)
+ * - cc: Controller device
  * - ss: Signal classification
  */
 public class NameGeneratorUtil {
@@ -37,7 +38,7 @@ public class NameGeneratorUtil {
     /**
      * Generate a device name for non-lattice devices based on physical location.
      *
-     * Syntax: aa:bb-ddpp.zz_nn-ss
+     * Syntax: aa:bb-ddpp:zz:nn-cc:ss
      *
      * @param area Area code (required)
      * @param specificArea Specific area within location (optional)
@@ -45,6 +46,7 @@ public class NameGeneratorUtil {
      * @param position Position number (optional)
      * @param secondaryPosition Secondary position for horizontal/vertical (optional)
      * @param appendNumber Append number for connection points (optional)
+     * @param controller Controller device (optional)
      * @param signal Signal classification (optional)
      * @return Generated device name
      * @throws IllegalArgumentException if required fields are missing or invalid
@@ -56,6 +58,7 @@ public class NameGeneratorUtil {
             String position,
             String secondaryPosition,
             String appendNumber,
+            String controller,
             String signal) {
 
         // Validate required fields
@@ -86,6 +89,12 @@ public class NameGeneratorUtil {
         if (appendNumber != null && !appendNumber.isEmpty()) {
             validateField(appendNumber, APPEND_NUMBER_PATTERN, "Append Number");
         }
+        if (controller != null && !controller.isEmpty()) {
+            validateField(controller, DEVICE_PATTERN, "Controller");
+            if (!repository.isValidController(controller)) {
+                throw new IllegalArgumentException("Controller '" + controller + "' is not in the naming repository");
+            }
+        }
         if (signal != null && !signal.isEmpty()) {
             validateField(signal, SIGNAL_PATTERN, "Signal");
             if (!repository.isValidSignal(signal)) {
@@ -96,7 +105,7 @@ public class NameGeneratorUtil {
         // Build the name
         StringBuilder name = new StringBuilder();
 
-        // aa:bb-ddpp.zz_nn-ss
+        // aa:bb-ddpp:zz:nn-cc:ss
         name.append(area.toUpperCase());
 
         if (specificArea != null && !specificArea.isEmpty()) {
@@ -110,15 +119,19 @@ public class NameGeneratorUtil {
         }
 
         if (secondaryPosition != null && !secondaryPosition.isEmpty()) {
-            name.append(".").append(secondaryPosition);
+            name.append(":").append(secondaryPosition);
         }
 
         if (appendNumber != null && !appendNumber.isEmpty()) {
-            name.append("_").append(appendNumber);
+            name.append(":").append(appendNumber);
+        }
+
+        if (controller != null && !controller.isEmpty()) {
+            name.append("-").append(controller.toUpperCase());
         }
 
         if (signal != null && !signal.isEmpty()) {
-            name.append("-").append(signal.toUpperCase());
+            name.append(":").append(signal.toUpperCase());
         }
 
         return name.toString();
@@ -139,6 +152,7 @@ public class NameGeneratorUtil {
             parameters.get("position"),
             parameters.get("secondaryPosition"),
             parameters.get("appendNumber"),
+            parameters.get("controller"),
             parameters.get("signal")
         );
     }
