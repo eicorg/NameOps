@@ -25,6 +25,30 @@ import java.util.Map;
 public class NameController {
 
     /**
+     * API root endpoint
+     */
+    @GetMapping({"", "/"})
+    @Operation(summary = "API Root", description = "Get API base path information and available endpoints")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "API information returned successfully")
+    })
+    public Map<String, Object> apiRoot() {
+        return Map.of(
+            "service", "NameOps - EIC Device Naming Service",
+            "basePath", "/api/v1/nameops",
+            "endpoints", Map.of(
+                "health", "/api/v1/nameops/health",
+                "generate", "/api/v1/nameops/generate",
+                "validate", "/api/v1/nameops/validate",
+                "convention", "/api/v1/nameops/convention",
+                "repository", "/api/v1/nameops/repository",
+                "swaggerUi", "/swagger-ui.html",
+                "openApiJson", "/api-docs"
+            )
+        );
+    }
+
+    /**
      * Health check endpoint
      */
     @GetMapping("/health")

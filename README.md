@@ -57,12 +57,14 @@ java -jar target/nameops-1.0.0-SNAPSHOT.jar
 
 The service will start on `http://localhost:8080`
 
-### API Documentation
+### Swagger / OpenAPI
 
-Once the application is running, you can access the interactive API documentation:
+Swagger UI is enabled through the `springdoc-openapi-starter-webmvc-ui` dependency in `pom.xml`.
 
-- **Swagger UI**: http://localhost:8080/swagger-ui.html
-- **OpenAPI JSON**: http://localhost:8080/api-docs
+Once the application is running, open:
+
+- **Swagger UI**: `http://localhost:8080/swagger-ui.html`
+- **OpenAPI JSON**: `http://localhost:8080/api-docs`
 
 The Swagger UI provides an interactive interface to:
 - Explore all available endpoints
@@ -72,8 +74,9 @@ The Swagger UI provides an interactive interface to:
 
 ### REST API Endpoints
 
-All endpoints are prefixed with `/api/v1/nameops`:
+Base path: `/api/v1/nameops`
 
+- `GET /` - API root summary (use `http://localhost:8080/api/v1/nameops`)
 - `GET /health` - Service health check
 - `POST /generate` - Generate a device name
 - `POST /validate` - Validate a device name
@@ -148,6 +151,7 @@ The service will start on `http://localhost:8080`
 
 ### API Endpoints
 
+- **API Root**: `GET /api/v1/nameops`
 - **Health Check**: `GET /api/v1/nameops/health`
 - **Generate Name**: `POST /api/v1/nameops/generate`
 - **Validate Name**: `POST /api/v1/nameops/validate`
@@ -174,8 +178,8 @@ All reference documents and databases are located in the `resources/` directory.
 
 ## Technology Stack
 
-- **Java 17**
-- **Spring Boot 3.2.3** (with BOM dependency management)
+- **Java 25**
+- **Spring Boot 4.1.0** (with BOM dependency management)
 - **Spring Web** - REST API framework
 - **Spring Boot Actuator** - Production-ready monitoring
 - **Jackson 2.16.1** - JSON processing
