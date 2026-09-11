@@ -113,13 +113,22 @@ curl -X POST http://localhost:8080/api/v1/nameops/generate \
 
 ## Naming Repository
 
-The system maintains a repository of valid naming elements in `src/main/resources/naming-repository.json`. This configuration file contains:
+The system maintains a repository of valid naming elements under `src/main/resources/naming-repository/`. Each section is managed independently:
 
 - **Areas (aa)**: Valid installation locations (ES, IS, TB, IR, HALL)
 - **Devices (dd)**: Device function types with full names and lattice keywords
 - **Controllers (cc)**: Controller device types for lattice devices
 - **Signals (ss)**: Signal classification types (RB, SP, RD, WR, etc.)
 - **Specific Areas (bb)**: Sub-locations within main areas
+- **Validation**: Shared field validation rules
+
+The split repository files are:
+- `areas.json`
+- `devices.json`
+- `controllers.json`
+- `signals.json`
+- `specific-areas.json`
+- `validation.json`
 
 Each element includes:
 - Abbreviation (used in device names)

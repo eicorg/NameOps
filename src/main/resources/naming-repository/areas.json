@@ -1,0 +1,22 @@
+[
+  {
+    "abbreviation": "ES",
+    "fullName": "Electron Storage Ring",
+    "description": "Main electron storage ring"
+  },
+  {
+    "abbreviation": "IS",
+    "fullName": "Ion Storage Ring",
+    "description": "Main ion storage ring"
+  },
+  {
+    "abbreviation": "IR",
+    "fullName": "Interaction Region",
+    "description": "Interaction region area"
+  },
+  {
+    "abbreviation": "HALL",
+    "fullName": "Experimental Hall",
+    "description": "Main experimental hall"
+  }
+]

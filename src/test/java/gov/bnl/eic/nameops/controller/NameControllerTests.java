@@ -34,13 +34,13 @@ class NameControllerTests {
     @BeforeAll
     static void setupAll() {
         // Load test configuration
-        NamingRepositoryUtil.setConfigFileName("test-naming-repository.json");
+        NamingRepositoryUtil.setConfigPath("test-naming-repository");
     }
 
     @AfterAll
     static void tearDownAll() {
         // Reset to default configuration
-        NamingRepositoryUtil.setConfigFileName("naming-repository.json");
+        NamingRepositoryUtil.setConfigPath("naming-repository");
     }
 
     @BeforeEach

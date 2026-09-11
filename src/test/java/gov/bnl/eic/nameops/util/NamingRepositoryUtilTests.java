@@ -17,13 +17,13 @@ class NamingRepositoryUtilTests {
     @BeforeAll
     static void setup() {
         // Load test configuration
-        NamingRepositoryUtil.setConfigFileName("test-naming-repository.json");
+        NamingRepositoryUtil.setConfigPath("test-naming-repository");
     }
 
     @AfterAll
     static void tearDown() {
         // Reset to default configuration
-        NamingRepositoryUtil.setConfigFileName("naming-repository.json");
+        NamingRepositoryUtil.setConfigPath("naming-repository");
     }
 
     @Test
@@ -84,5 +84,17 @@ class NamingRepositoryUtilTests {
         assertNotNull(ps);
         assertEquals("PS", ps.getAbbreviation());
         assertEquals("Power Supply", ps.getFullName());
+    }
+
+    @Test
+    void testLegacySingleFileConfigurationStillLoads() {
+        NamingRepositoryUtil.setConfigFileName("test-naming-repository-legacy.json");
+        try {
+            NamingRepositoryUtil repository = NamingRepositoryUtil.getInstance();
+            assertTrue(repository.isValidArea("TB"));
+            assertTrue(repository.isValidDevice("PS"));
+        } finally {
+            NamingRepositoryUtil.setConfigPath("test-naming-repository");
+        }
     }
 }

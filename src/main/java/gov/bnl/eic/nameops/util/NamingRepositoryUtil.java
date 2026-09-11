@@ -13,17 +13,22 @@ import java.util.stream.Collectors;
  */
 public class NamingRepositoryUtil {
 
+    private static final String DEFAULT_CONFIG_LOCATION = "naming-repository";
+    private static final Map<String, String> SECTION_FILES = Map.of(
+        "areas", "areas.json",
+        "devices", "devices.json",
+        "controllers", "controllers.json",
+        "signals", "signals.json",
+        "specificAreas", "specific-areas.json",
+        "validation", "validation.json"
+    );
+
     private static NamingRepositoryUtil instance;
-    private static String configFileName;
+    private static String configLocation;
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     static {
-        // Try to load from system property first, then environment variable, then default
-        configFileName = System.getProperty("naming.repository.file",
-                System.getenv("NAMING_REPOSITORY_FILE"));
-        if (configFileName == null || configFileName.isEmpty()) {
-            configFileName = "naming-repository.json";
-        }
+        configLocation = resolveConfigLocation();
     }
 
     private final Map<String, NamingElement> areas;
@@ -68,7 +73,14 @@ public class NamingRepositoryUtil {
      * Set configuration file name (for testing purposes)
      */
     public static void setConfigFileName(String fileName) {
-        configFileName = fileName;
+        setConfigPath(fileName);
+    }
+
+    /**
+     * Set configuration path (for testing purposes)
+     */
+    public static void setConfigPath(String path) {
+        configLocation = path;
         resetInstance();
     }
 
@@ -87,23 +99,65 @@ public class NamingRepositoryUtil {
     @SuppressWarnings("unchecked")
     private Map<String, Object> loadConfiguration() {
         try {
-            InputStream inputStream = getClass().getClassLoader()
-                .getResourceAsStream(configFileName);
-
-            if (inputStream == null) {
-                System.err.println("ERROR: " + configFileName + " not found in resources");
-                System.err.println("Classpath: " + System.getProperty("java.class.path"));
-                throw new RuntimeException(configFileName + " not found in resources");
+            Map<String, Object> config;
+            if (configLocation.toLowerCase().endsWith(".json")) {
+                config = loadLegacyConfiguration(configLocation);
+            } else {
+                config = loadSplitConfiguration(configLocation);
             }
-
-            Map<String, Object> config = objectMapper.readValue(inputStream, Map.class);
-            System.out.println("Successfully loaded naming repository configuration from " + configFileName);
+            System.out.println("Successfully loaded naming repository configuration from " + configLocation);
             return config;
         } catch (Exception e) {
             System.err.println("ERROR: Failed to load naming repository configuration: " + e.getMessage());
             e.printStackTrace();
             throw new RuntimeException("Failed to load naming repository configuration", e);
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private Map<String, Object> loadLegacyConfiguration(String resourceName) throws Exception {
+        InputStream inputStream = getRequiredResource(resourceName);
+        return objectMapper.readValue(inputStream, Map.class);
+    }
+
+    private Map<String, Object> loadSplitConfiguration(String basePath) throws Exception {
+        Map<String, Object> config = new HashMap<>();
+        String normalizedBasePath = basePath.endsWith("/") ? basePath.substring(0, basePath.length() - 1) : basePath;
+
+        for (Map.Entry<String, String> section : SECTION_FILES.entrySet()) {
+            String resourcePath = normalizedBasePath + "/" + section.getValue();
+            config.put(section.getKey(), readJsonResource(resourcePath));
+        }
+
+        return config;
+    }
+
+    private Object readJsonResource(String resourcePath) throws Exception {
+        InputStream inputStream = getRequiredResource(resourcePath);
+        return objectMapper.readValue(inputStream, Object.class);
+    }
+
+    private InputStream getRequiredResource(String resourcePath) {
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(resourcePath);
+        if (inputStream == null) {
+            System.err.println("ERROR: " + resourcePath + " not found in resources");
+            System.err.println("Classpath: " + System.getProperty("java.class.path"));
+            throw new RuntimeException(resourcePath + " not found in resources");
+        }
+        return inputStream;
+    }
+
+    private static String resolveConfigLocation() {
+        String configuredPath = System.getProperty("naming.repository.path",
+            System.getenv("NAMING_REPOSITORY_PATH"));
+        if (configuredPath == null || configuredPath.isEmpty()) {
+            configuredPath = System.getProperty("naming.repository.file",
+                System.getenv("NAMING_REPOSITORY_FILE"));
+        }
+        if (configuredPath == null || configuredPath.isEmpty()) {
+            configuredPath = DEFAULT_CONFIG_LOCATION;
+        }
+        return configuredPath;
     }
 
     /**

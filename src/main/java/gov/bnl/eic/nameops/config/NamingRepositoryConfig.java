@@ -13,8 +13,8 @@ import jakarta.annotation.PostConstruct;
 @Configuration
 public class NamingRepositoryConfig {
 
-    @Value("${naming.repository.file:naming-repository.json}")
-    private String repositoryFile;
+    @Value("${naming.repository.path:${naming.repository.file:naming-repository}}")
+    private String repositoryLocation;
 
     /**
      * Initialize naming repository configuration.
@@ -22,7 +22,7 @@ public class NamingRepositoryConfig {
      */
     @PostConstruct
     public void init() {
-        System.setProperty("naming.repository.file", repositoryFile);
-        System.out.println("Naming repository file configured: " + repositoryFile);
+        System.setProperty("naming.repository.path", repositoryLocation);
+        System.out.println("Naming repository location configured: " + repositoryLocation);
     }
 }

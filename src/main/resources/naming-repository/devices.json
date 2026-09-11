@@ -1,0 +1,81 @@
+[
+  {
+    "abbreviation": "B",
+    "fullName": "Beam Position Monitor",
+    "description": "Beam position monitor (both planes)",
+    "latticeKeyword": "BPM"
+  },
+  {
+    "abbreviation": "BH",
+    "fullName": "Horizontal Beam Position Monitor",
+    "description": "Horizontal beam position monitor",
+    "latticeKeyword": "HMONITOR"
+  },
+  {
+    "abbreviation": "BV",
+    "fullName": "Vertical Beam Position Monitor",
+    "description": "Vertical beam position monitor",
+    "latticeKeyword": "VMONITOR"
+  },
+  {
+    "abbreviation": "Q",
+    "fullName": "Quadrupole",
+    "description": "Quadrupole magnet",
+    "latticeKeyword": "QUADRUPOLE"
+  },
+  {
+    "abbreviation": "DH",
+    "fullName": "Horizontal Dipole",
+    "description": "Horizontal bending dipole",
+    "latticeKeyword": "RBEND"
+  },
+  {
+    "abbreviation": "DV",
+    "fullName": "Vertical Dipole",
+    "description": "Vertical bending dipole",
+    "latticeKeyword": "SBEND"
+  },
+  {
+    "abbreviation": "SX",
+    "fullName": "Sextupole",
+    "description": "Sextupole magnet",
+    "latticeKeyword": "SEXTUPOLE"
+  },
+  {
+    "abbreviation": "CAV",
+    "fullName": "RF Cavity",
+    "description": "Radio frequency cavity",
+    "latticeKeyword": "RFCAVITY"
+  },
+  {
+    "abbreviation": "PS",
+    "fullName": "Power Supply",
+    "description": "Magnet power supply"
+  },
+  {
+    "abbreviation": "DT",
+    "fullName": "Drift",
+    "description": "Drift space",
+    "latticeKeyword": "DRIFT"
+  },
+  {
+    "abbreviation": "C",
+    "fullName": "Collimator",
+    "description": "Beam collimator"
+  },
+  {
+    "abbreviation": "V",
+    "fullName": "Vacuum",
+    "description": "Vacuum system component"
+  },
+  {
+    "abbreviation": "TM",
+    "fullName": "Temperature Monitor",
+    "description": "Temperature monitoring device"
+  },
+  {
+    "abbreviation": "PM",
+    "fullName": "Pressure Monitor",
+    "description": "Pressure monitoring device"
+  }
+]

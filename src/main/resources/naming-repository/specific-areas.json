@@ -1,0 +1,22 @@
+[
+  {
+    "abbreviation": "01",
+    "fullName": "Area 01",
+    "description": "First designated area"
+  },
+  {
+    "abbreviation": "02",
+    "fullName": "Area 02",
+    "description": "Second designated area"
+  },
+  {
+    "abbreviation": "HALL",
+    "fullName": "Hall Area",
+    "description": "Main hall area"
+  },
+  {
+    "abbreviation": "RACK",
+    "fullName": "Rack Area",
+    "description": "Equipment rack area"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "abbreviation": "ES",
+    "fullName": "Electron Storage Ring",
+    "description": "Main electron storage ring"
+  },
+  {
+    "abbreviation": "ES6",
+    "fullName": "Electron Storage Ring Section 6",
+    "description": "Electron storage ring section 6"
+  },
+  {
+    "abbreviation": "IS",
+    "fullName": "Ion Storage Ring",
+    "description": "Main ion storage ring"
+  },
+  {
+    "abbreviation": "IR",
+    "fullName": "Interaction Region",
+    "description": "Interaction region area"
+  },
+  {
+    "abbreviation": "TB",
+    "fullName": "Test Beam",
+    "description": "Test beam area"
+  },
+  {
+    "abbreviation": "HALL",
+    "fullName": "Experimental Hall",
+    "description": "Main experimental hall"
+  }
+]

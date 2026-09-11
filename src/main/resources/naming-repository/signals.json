@@ -1,0 +1,47 @@
+[
+  {
+    "abbreviation": "RB",
+    "fullName": "Readback",
+    "description": "Readback signal"
+  },
+  {
+    "abbreviation": "SP",
+    "fullName": "Setpoint",
+    "description": "Setpoint signal"
+  },
+  {
+    "abbreviation": "RD",
+    "fullName": "Read",
+    "description": "Read signal"
+  },
+  {
+    "abbreviation": "WR",
+    "fullName": "Write",
+    "description": "Write signal"
+  },
+  {
+    "abbreviation": "ST",
+    "fullName": "Status",
+    "description": "Status signal"
+  },
+  {
+    "abbreviation": "CMD",
+    "fullName": "Command",
+    "description": "Command signal"
+  },
+  {
+    "abbreviation": "ALM",
+    "fullName": "Alarm",
+    "description": "Alarm signal"
+  },
+  {
+    "abbreviation": "RDX",
+    "fullName": "Readback X",
+    "description": "X-axis readback"
+  },
+  {
+    "abbreviation": "RDY",
+    "fullName": "Readback Y",
+    "description": "Y-axis readback"
+  }
+]

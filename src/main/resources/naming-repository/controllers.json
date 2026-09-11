@@ -1,0 +1,27 @@
+[
+  {
+    "abbreviation": "PS",
+    "fullName": "Power Supply",
+    "description": "Power supply controller"
+  },
+  {
+    "abbreviation": "DI",
+    "fullName": "Digital Input",
+    "description": "Digital input controller"
+  },
+  {
+    "abbreviation": "DO",
+    "fullName": "Digital Output",
+    "description": "Digital output controller"
+  },
+  {
+    "abbreviation": "AI",
+    "fullName": "Analog Input",
+    "description": "Analog input controller"
+  },
+  {
+    "abbreviation": "AO",
+    "fullName": "Analog Output",
+    "description": "Analog output controller"
+  }
+]
