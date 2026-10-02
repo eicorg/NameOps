@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NameOps — EIC Device Naming Tool</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <h1>NameOps</h1>
+      <p class="subtitle">EIC Device Naming Convention Tool</p>
+      <p class="description">
+        Generate and validate standardized device names for the Electron-Ion Collider (EIC)
+        according to the official naming convention. Non-lattice devices follow
+        <code class="syntax-badge">aa:bb-ddpp:zz:nn-cc:ss</code> while lattice devices follow
+        <code class="syntax-badge">aa-ddpp_nn-ccss</code>.
+      </p>
+    </div>
+  </header>
+
+  <main class="container">
+    <nav class="tabs" role="tablist">
+      <button class="tab-btn active" data-tab="generate" role="tab" aria-selected="true">Generate</button>
+      <button class="tab-btn" data-tab="validate" role="tab" aria-selected="false">Validate</button>
+    </nav>
+
+    <!-- Generate Panel -->
+    <section id="generate-panel" class="tab-panel active">
+      <article class="card">
+        <h2>Generate a Device Name</h2>
+        <form id="generate-form">
+          <div class="field-list">
+            <div class="field-row">
+              <label for="gen-area" class="field-label">Area *</label>
+              <select id="gen-area" name="area" required></select>
+              <small class="helper-text" id="gen-area-help"></small>
+            </div>
+            <div class="field-row">
+              <label for="gen-specificArea" class="field-label">Specific Area</label>
+              <select id="gen-specificArea" name="specificArea">
+                <option value="">— none —</option>
+              </select>
+              <small class="helper-text" id="gen-specificArea-help"></small>
+            </div>
+            <div class="field-row">
+              <label for="gen-device" class="field-label">Device *</label>
+              <select id="gen-device" name="device" required></select>
+              <small class="helper-text" id="gen-device-help"></small>
+            </div>
+            <div class="field-row">
+              <label for="gen-position" class="field-label">Position</label>
+              <input type="text" id="gen-position" name="position" placeholder="e.g. 10" maxlength="3">
+              <small class="helper-text">1-3 digit position number</small>
+            </div>
+            <div class="field-row">
+              <label for="gen-secondaryPosition" class="field-label">Secondary Position</label>
+              <input type="text" id="gen-secondaryPosition" name="secondaryPosition" placeholder="e.g. 01" maxlength="2">
+              <small class="helper-text">1-2 digit horizontal/vertical position</small>
+            </div>
+            <div class="field-row">
+              <label for="gen-appendNumber" class="field-label">Append Number</label>
+              <input type="text" id="gen-appendNumber" name="appendNumber" placeholder="e.g. 01" maxlength="2">
+              <small class="helper-text">1-2 digit connection point number</small>
+            </div>
+            <div class="field-row">
+              <label for="gen-controller" class="field-label">Controller</label>
+              <select id="gen-controller" name="controller">
+                <option value="">— none —</option>
+              </select>
+              <small class="helper-text" id="gen-controller-help"></small>
+            </div>
+            <div class="field-row">
+              <label for="gen-signal" class="field-label">Signal</label>
+              <select id="gen-signal" name="signal">
+                <option value="">— none —</option>
+              </select>
+              <small class="helper-text" id="gen-signal-help"></small>
+            </div>
+            <div class="field-row">
+              <label for="gen-lattice" class="field-label">Lattice device</label>
+              <input type="checkbox" id="gen-lattice" name="lattice" role="switch">
+              <small class="helper-text">Beamline component using aa-ddpp_nn-ccss syntax</small>
+            </div>
+          </div>
+          <button type="submit">Generate Name</button>
+        </form>
+        <div id="generate-result" class="result-panel" hidden></div>
+      </article>
+    </section>
+
+    <!-- Validate Panel -->
+    <section id="validate-panel" class="tab-panel">
+      <article class="card">
+        <h2>Validate a Device Name</h2>
+        <form id="validate-form">
+          <label for="val-name">Device Name
+            <input type="text" id="val-name" name="name" placeholder="e.g. ES:01-PS10:01:01-CC:RB" required>
+          </label>
+          <button type="submit">Validate Name</button>
+        </form>
+        <div id="validate-result" class="result-panel" hidden></div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="container">
+    <p>
+      <a href="/swagger-ui.html">API Documentation (Swagger UI)</a> ·
+      <a href="/naming-convention.md">Naming Convention Reference</a>
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -86,7 +86,7 @@ public class NameController {
                     examples = {
                         @ExampleObject(name = "Non-lattice device", value = "{\"area\":\"TB\",\"specificArea\":\"01\",\"device\":\"PS\",\"position\":\"10\"}"),
                         @ExampleObject(name = "Full non-lattice", value = "{\"area\":\"TB\",\"specificArea\":\"01\",\"device\":\"PS\",\"position\":\"10\",\"secondaryPosition\":\"01\",\"appendNumber\":\"01\",\"controller\":\"CC\",\"signal\":\"RB\"}"),
-                        @ExampleObject(name = "Lattice device", value = "{\"area\":\"ES\",\"device\":\"Q\",\"position\":\"42\",\"controller\":\"PS\",\"signal\":\"SP\"}")
+                        @ExampleObject(name = "Lattice device", value = "{\"area\":\"ES\",\"device\":\"Q\",\"position\":\"42\",\"controller\":\"PS\",\"signal\":\"SP\",\"lattice\":\"true\"}")
                     }
                 )
             )

@@ -42,6 +42,7 @@ For detailed syntax requirements and element descriptions, see the [Naming Conve
 - **Repository Access** - Utilize approved abbreviations and naming databases
 - **Configuration-Driven** - Valid naming elements defined in JSON configuration
 - **REST API** - RESTful web service with OpenAPI/Swagger documentation
+- **Web UI** - Browser-based form for generating and validating device names
 
 ## Getting Started
 
@@ -56,6 +57,12 @@ java -jar target/nameops-1.0.0-SNAPSHOT.jar
 ```
 
 The service will start on `http://localhost:8080`
+
+### Web UI
+
+Open **`http://localhost:8080/`** in a browser for a simple web interface to generate and validate device
+names using dropdowns populated from the naming repository. The UI is a static page
+(`src/main/resources/static/`) served directly by Spring Boot — no separate build step required.
 
 ### Swagger / OpenAPI
 

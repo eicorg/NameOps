@@ -190,12 +190,13 @@ class NameGeneratorUtilTests {
     }
 
     @Test
-    void testGenerateDeviceName_AutoDetectLattice() {
+    void testGenerateDeviceName_LatticeFlagWithController() {
         Map<String, String> params = new HashMap<>();
         params.put("area", "ES");
         params.put("device", "Q");
         params.put("position", "42");
         params.put("controller", "PS");
+        params.put("lattice", "true");
 
         String result = NameGeneratorUtil.generateDeviceName(params);
         assertEquals("ES-Q42-PS", result);

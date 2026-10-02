@@ -126,7 +126,8 @@ class NameControllerTests {
                 "device", "Q",
                 "position", "42",
                 "controller", "PS",
-                "signal", "RB"
+                "signal", "RB",
+                "lattice", "true"
         );
 
         mockMvc.perform(post("/api/v1/nameops/generate")

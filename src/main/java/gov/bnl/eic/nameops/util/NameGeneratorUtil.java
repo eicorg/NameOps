@@ -288,17 +288,13 @@ public class NameGeneratorUtil {
      * @throws IllegalArgumentException if required fields are missing or invalid
      */
     public static String generateDeviceName(Map<String, String> parameters) {
-        // Check if it's a lattice device (has controller or explicit lattice flag)
-        boolean hasController = parameters.containsKey("controller") &&
-                               parameters.get("controller") != null &&
-                               !parameters.get("controller").isEmpty();
-        boolean hasSpecificArea = parameters.containsKey("specificArea") &&
-                                 parameters.get("specificArea") != null &&
-                                 !parameters.get("specificArea").isEmpty();
+        // Controller is a valid optional field in both lattice and non-lattice
+        // names, so its presence cannot reliably indicate the format. Callers
+        // must explicitly set "lattice": "true" to request lattice-style names.
         boolean isLattice = parameters.containsKey("lattice") &&
                            Boolean.parseBoolean(parameters.get("lattice"));
 
-        if (isLattice || hasController) {
+        if (isLattice) {
             return generateLatticeDeviceName(parameters);
         } else {
             return generateNonLatticeDeviceName(parameters);

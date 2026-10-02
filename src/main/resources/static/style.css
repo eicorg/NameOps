@@ -1,0 +1,225 @@
+:root {
+  --nameops-accent: #0b63ce;
+  --nameops-accent-hover: #084a9c;
+  --nameops-success-bg: #e6f6ec;
+  --nameops-success-border: #2fa865;
+  --nameops-success-text: #1e7a46;
+  --nameops-error-bg: #fdecec;
+  --nameops-error-border: #d64545;
+  --nameops-error-text: #a62828;
+  --nameops-muted: #6b7684;
+  --nameops-surface: #ffffff;
+  --nameops-radius: 10px;
+}
+
+body {
+  background: #f4f6f9;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* Hero */
+.hero {
+  background: linear-gradient(135deg, var(--nameops-accent), #083a7a);
+  color: #fff;
+  padding: 2.5rem 0 2rem;
+  margin-bottom: 2rem;
+}
+
+.hero h1 {
+  margin-bottom: 0.25rem;
+  color: #fff;
+}
+
+.hero .subtitle {
+  font-size: 1.05rem;
+  opacity: 0.9;
+  margin-bottom: 1rem;
+}
+
+.hero .description {
+  max-width: 70ch;
+  opacity: 0.95;
+  margin-bottom: 0;
+}
+
+.syntax-badge {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 6px;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.95em;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid #dde2e8;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 0.6rem 1.1rem;
+  font-weight: 600;
+  color: var(--nameops-muted);
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.tab-btn:hover {
+  color: var(--nameops-accent);
+  background: none;
+}
+
+.tab-btn.active {
+  color: var(--nameops-accent);
+  border-bottom-color: var(--nameops-accent);
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+/* Cards */
+.card {
+  background: var(--nameops-surface);
+  border-radius: var(--nameops-radius);
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.08), 0 1px 2px rgba(16, 24, 40, 0.06);
+  padding: 1.75rem;
+  margin-bottom: 2rem;
+}
+
+.card h2 {
+  margin-top: 0;
+}
+
+/* Vertical field list: label, control, and description on one line per field */
+.field-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.field-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.field-label {
+  flex: 0 0 160px;
+  margin: 0;
+  font-weight: 600;
+}
+
+.field-row select,
+.field-row input[type="text"] {
+  flex: 0 0 220px;
+  width: 220px;
+  margin: 0;
+}
+
+.field-row input[type="checkbox"] {
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+.field-row .helper-text {
+  flex: 1 1 240px;
+  margin: 0;
+  color: var(--nameops-muted);
+  font-size: 0.82rem;
+}
+
+@media (max-width: 640px) {
+  .field-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .field-label {
+    flex-basis: auto;
+  }
+
+  .field-row select,
+  .field-row input[type="text"] {
+    width: 100%;
+  }
+}
+
+.helper-text {
+  display: block;
+  color: var(--nameops-muted);
+  margin-top: -0.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.82rem;
+}
+
+/* Result panel */
+.result-panel {
+  margin-top: 1.5rem;
+  padding: 1rem 1.25rem;
+  border-radius: var(--nameops-radius);
+  border: 1px solid transparent;
+}
+
+.result-panel.success {
+  background: var(--nameops-success-bg);
+  border-color: var(--nameops-success-border);
+  color: var(--nameops-success-text);
+}
+
+.result-panel.error {
+  background: var(--nameops-error-bg);
+  border-color: var(--nameops-error-border);
+  color: var(--nameops-error-text);
+}
+
+.result-name {
+  font-family: "Courier New", monospace;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0.25rem 0 0.75rem;
+  word-break: break-all;
+}
+
+.result-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.copy-btn {
+  width: auto;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+footer {
+  text-align: center;
+  padding: 2rem 0 3rem;
+  color: var(--nameops-muted);
+  font-size: 0.9rem;
+}
+
+footer a {
+  color: var(--nameops-accent);
+}
