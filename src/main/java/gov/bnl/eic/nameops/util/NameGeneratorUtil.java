@@ -20,8 +20,6 @@ import java.util.regex.Pattern;
  */
 public class NameGeneratorUtil {
 
-    private static final NamingRepositoryUtil repository = NamingRepositoryUtil.getInstance();
-
     // Validation patterns
     private static final Pattern AREA_PATTERN = Pattern.compile("^[A-Z0-9]{2,4}$");
     private static final Pattern SPECIFIC_AREA_PATTERN = Pattern.compile("^[A-Z0-9]{1,4}$");
@@ -83,15 +81,18 @@ public class NameGeneratorUtil {
         validateField(device, DEVICE_PATTERN, "Device");
 
         // Validate against repository
-        if (!repository.isValidArea(area)) {
+        if (!repository().isValidArea(area)) {
             throw new IllegalArgumentException("Area '" + area + "' is not in the naming repository");
         }
-        if (!repository.isValidDevice(device)) {
+        if (!repository().isValidDevice(device)) {
             throw new IllegalArgumentException("Device '" + device + "' is not in the naming repository");
         }
 
         if (specificArea != null && !specificArea.isEmpty()) {
             validateField(specificArea, SPECIFIC_AREA_PATTERN, "Specific Area");
+            if (!repository().isValidSpecificArea(specificArea)) {
+                throw new IllegalArgumentException("Specific Area '" + specificArea + "' is not in the naming repository");
+            }
         }
         if (position != null && !position.isEmpty()) {
             validateField(position, POSITION_PATTERN, "Position");
@@ -104,13 +105,13 @@ public class NameGeneratorUtil {
         }
         if (controller != null && !controller.isEmpty()) {
             validateField(controller, DEVICE_PATTERN, "Controller");
-            if (!repository.isValidController(controller)) {
+            if (!repository().isValidController(controller)) {
                 throw new IllegalArgumentException("Controller '" + controller + "' is not in the naming repository");
             }
         }
         if (signal != null && !signal.isEmpty()) {
             validateField(signal, SIGNAL_PATTERN, "Signal");
-            if (!repository.isValidSignal(signal)) {
+            if (!repository().isValidSignal(signal)) {
                 throw new IllegalArgumentException("Signal '" + signal + "' is not in the naming repository");
             }
         }
@@ -213,10 +214,10 @@ public class NameGeneratorUtil {
         validateField(position, POSITION_PATTERN, "Position");
 
         // Validate against repository
-        if (!repository.isValidArea(area)) {
+        if (!repository().isValidArea(area)) {
             throw new IllegalArgumentException("Area '" + area + "' is not in the naming repository");
         }
-        if (!repository.isValidDevice(device)) {
+        if (!repository().isValidDevice(device)) {
             throw new IllegalArgumentException("Device '" + device + "' is not in the naming repository");
         }
 
@@ -225,13 +226,13 @@ public class NameGeneratorUtil {
         }
         if (controller != null && !controller.isEmpty()) {
             validateField(controller, DEVICE_PATTERN, "Controller");
-            if (!repository.isValidController(controller)) {
+            if (!repository().isValidController(controller)) {
                 throw new IllegalArgumentException("Controller '" + controller + "' is not in the naming repository");
             }
         }
         if (signal != null && !signal.isEmpty()) {
             validateField(signal, SIGNAL_PATTERN, "Signal");
-            if (!repository.isValidSignal(signal)) {
+            if (!repository().isValidSignal(signal)) {
                 throw new IllegalArgumentException("Signal '" + signal + "' is not in the naming repository");
             }
         }
@@ -312,5 +313,9 @@ public class NameGeneratorUtil {
         if (!pattern.matcher(value).matches()) {
             throw new IllegalArgumentException(fieldName + " format is invalid: " + value);
         }
+    }
+
+    private static NamingRepositoryUtil repository() {
+        return NamingRepositoryUtil.getInstance();
     }
 }
