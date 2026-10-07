@@ -245,6 +245,16 @@ class NameGeneratorUtilTests {
     }
 
     @Test
+    void testValidation_InvalidSpecificAreaRepositoryValue() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            NameGeneratorUtil.generateNonLatticeDeviceName(
+                "TB", "ZZ", "PS", "10", null, null, null, null
+            );
+        });
+        assertTrue(exception.getMessage().contains("Specific Area 'ZZ' is not in the naming repository"));
+    }
+
+    @Test
     void testComplexExample_NonLattice() {
         // Example: IR:HALL-BPM05:02:03-RDX
         String result = NameGeneratorUtil.generateNonLatticeDeviceName(
