@@ -104,7 +104,43 @@ class NameControllerTests {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.status").value("success"))
                 .andExpect(jsonPath("$.name").value("TB:01-PS10:01:01-CC:RB"))
-                .andExpect(jsonPath("$.valid").value(true));
+                .andExpect(jsonPath("$.valid").value(true))
+                .andExpect(jsonPath("$.format").value("non-lattice"))
+                .andExpect(jsonPath("$.components.area").value("TB"))
+                .andExpect(jsonPath("$.components.specificArea").value("01"))
+                .andExpect(jsonPath("$.components.device").value("PS"))
+                .andExpect(jsonPath("$.components.position").value("10"))
+                .andExpect(jsonPath("$.components.secondaryPosition").value("01"))
+                .andExpect(jsonPath("$.components.appendNumber").value("01"))
+                .andExpect(jsonPath("$.components.controller").value("CC"))
+                .andExpect(jsonPath("$.components.signal").value("RB"));
+    }
+
+    @Test
+    void testValidateNameEndpoint_InvalidName() throws Exception {
+        Map<String, String> request = Map.of("name", "TB:01-UNKNOWN10");
+
+        mockMvc.perform(post("/api/v1/nameops/validate")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("success"))
+                .andExpect(jsonPath("$.valid").value(false))
+                .andExpect(jsonPath("$.message").value("Name does not match the EIC lattice or non-lattice naming convention"));
+    }
+
+    @Test
+    void testValidateNameEndpoint_AmbiguousFormat() throws Exception {
+        Map<String, String> request = Map.of("name", "ES-Q42");
+
+        mockMvc.perform(post("/api/v1/nameops/validate")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("success"))
+                .andExpect(jsonPath("$.valid").value(true))
+                .andExpect(jsonPath("$.matches.length()").value(2))
+                .andExpect(jsonPath("$.message").value("Name is valid for both lattice and non-lattice naming conventions"));
     }
 
     @Test
@@ -165,7 +201,8 @@ class NameControllerTests {
         mockMvc.perform(post("/api/v1/nameops/validate")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.status").value("success"));
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value("error"))
+                .andExpect(jsonPath("$.message").value("Name is required"));
     }
 }

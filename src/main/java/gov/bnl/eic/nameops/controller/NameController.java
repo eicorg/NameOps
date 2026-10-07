@@ -1,6 +1,7 @@
 package gov.bnl.eic.nameops.controller;
 
 import gov.bnl.eic.nameops.util.NameGeneratorUtil;
+import gov.bnl.eic.nameops.util.NameValidationUtil;
 import gov.bnl.eic.nameops.util.NamingRepositoryUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -128,10 +129,10 @@ public class NameController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Validation result returned",
             content = @Content(mediaType = "application/json",
-                examples = @ExampleObject(value = "{\"status\":\"success\",\"name\":\"TB:01-PS10\",\"valid\":true,\"message\":\"Name is valid\"}"))),
+                examples = @ExampleObject(value = "{\"status\":\"success\",\"name\":\"TB:01-PS10\",\"valid\":true,\"format\":\"non-lattice\",\"message\":\"Name is valid for the non-lattice naming convention\"}"))),
         @ApiResponse(responseCode = "400", description = "Invalid request")
     })
-    public Map<String, Object> validateName(
+    public ResponseEntity<Map<String, Object>> validateName(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                 description = "Request containing the device name to validate",
                 content = @Content(
@@ -141,13 +142,26 @@ public class NameController {
             @RequestBody Map<String, String> request) {
         String deviceName = request.get("name");
 
-        // TODO: Implement validation logic
+        if (deviceName == null || deviceName.trim().isEmpty()) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("status", "error");
+            errorResponse.put("message", "Name is required");
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+
+        NameValidationUtil.ValidationResult result = NameValidationUtil.validateDeviceName(deviceName);
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");
-        response.put("name", deviceName);
-        response.put("valid", true);
-        response.put("message", "Validation endpoint - To be implemented");
-        return response;
+        response.put("name", result.normalizedName());
+        response.put("valid", result.valid());
+        response.put("message", result.message());
+        response.put("matches", result.matches());
+        if (result.matches().size() == 1) {
+            response.put("format", result.matches().get(0).format());
+            response.put("components", result.matches().get(0).components());
+        }
+
+        return ResponseEntity.ok(response);
     }
 
     /**
